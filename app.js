@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Nastavení URL Azure Function - změňte podle vaší konfigurace
   const API_URL = "https://bena-photo.azurewebsites.net/api";
+  // const API_URL = "http://localhost:7134/api";
 
   // Reference na HTML elementy
   const videoElement = document.getElementById("video");
@@ -187,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     photoList.innerHTML = "Načítání...";
 
-    fetch(`${API_URL}/photos?sessionId=${encodeURIComponent(sessionId)}`)
+    fetch(`${API_URL}/photos`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Chyba při načítání fotografií");
