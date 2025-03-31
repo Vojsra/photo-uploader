@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Nastavení URL Azure Function - změňte podle vaší konfigurace
-  const API_URL = "http://bena-photo.azurewebsites.net/api";
+  const API_URL = "https://bena-photo.azurewebsites.net/api";
 
   // Pro identifikaci relace použijeme ID v URL nebo vygenerujeme náhodné
   const urlParams = new URLSearchParams(window.location.search);
