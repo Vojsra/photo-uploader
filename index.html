@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Foto Uploader</title>
+    <title>Foto Uploader</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -15,11 +15,6 @@
 
         .hidden {
             display: none;
-        }
-
-        #video {
-            width: 100%;
-            background-color: #f0f0f0;
         }
 
         #photoPreview {
@@ -53,19 +48,9 @@
 </head>
 
 <body>
-    <h1>QR Foto Uploader</h1>
+    <h1>Foto Uploader</h1>
 
-    <div id="qrScannerSection">
-        <h2>Naskenujte QR kód</h2>
-        <div id="qrReader">
-            <video id="video" autoplay></video>
-        </div>
-        <button id="startScanButton">Spustit skener QR</button>
-        <p id="qrResult" class="hidden">QR kód: <span id="qrValue"></span></p>
-        <p id="qrError" class="error hidden">Nepodařilo se spustit kameru. Zkontrolujte oprávnění.</p>
-    </div>
-
-    <div id="uploadSection" class="hidden">
+    <div id="uploadSection">
         <h2>Nahrát fotografie</h2>
         <input type="file" id="photoInput" accept="image/*" multiple capture="camera">
         <button id="captureButton">Pořídit fotku</button>
@@ -76,13 +61,12 @@
         <p id="uploadStatus"></p>
     </div>
 
-    <div id="photoListSection" class="hidden">
+    <div id="photoListSection">
         <h2>Nahrané fotografie</h2>
         <button id="refreshPhotosButton">Obnovit seznam</button>
         <div id="photoList"></div>
     </div>
 
-    <script src="https://unpkg.com/html5-qrcode@2.3.4/html5-qrcode.min.js"></script>
     <script src="app.js"></script>
 </body>
 

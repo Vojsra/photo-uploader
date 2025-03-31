@@ -1,30 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Nastavení URL Azure Function - změňte podle vaší konfigurace
-  const API_URL = "https://bena-photo.azurewebsites.net/api";
-  // const API_URL = "http://localhost:7134/api";
+  const API_URL = "http://bena-photo.azurewebsites.net/api";
+
+  // Pro identifikaci relace použijeme ID v URL nebo vygenerujeme náhodné
+  const urlParams = new URLSearchParams(window.location.search);
+  const sessionId = urlParams.get("id") || generateRandomId();
 
   // Reference na HTML elementy
-  const videoElement = document.getElementById("video");
-  const startScanButton = document.getElementById("startScanButton");
-  const qrResult = document.getElementById("qrResult");
-  const qrValue = document.getElementById("qrValue");
-  const qrError = document.getElementById("qrError");
-  const uploadSection = document.getElementById("uploadSection");
   const photoInput = document.getElementById("photoInput");
   const captureButton = document.getElementById("captureButton");
   const photoPreview = document.getElementById("photoPreview");
   const uploadButton = document.getElementById("uploadButton");
   const uploadStatus = document.getElementById("uploadStatus");
-  const photoListSection = document.getElementById("photoListSection");
   const refreshPhotosButton = document.getElementById("refreshPhotosButton");
   const photoList = document.getElementById("photoList");
 
-  let html5QrCode;
-  let sessionId = null;
   let selectedFiles = [];
-
-  // Obsluha tlačítka pro skenování QR kódu
-  startScanButton.addEventListener("click", startQrScanner);
 
   // Obsluha změny vybraných souborů
   photoInput.addEventListener("change", handleFileSelection);
@@ -38,62 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Obsluha tlačítka pro obnovení seznamu fotografií
   refreshPhotosButton.addEventListener("click", loadPhotos);
 
-  /**
-   * Spustí skener QR kódů
-   */
-  function startQrScanner() {
-    // Vytvoření instance QR skeneru
-    html5QrCode = new Html5Qrcode("qrReader");
-
-    // Konfigurace pro kameru
-    const config = { fps: 10, qrbox: { width: 250, height: 250 } };
-
-    // Spuštění kamery a skenování QR kódů
-    html5QrCode
-      .start(
-        { facingMode: "environment" },
-        config,
-        onQrCodeSuccess,
-        onQrCodeError
-      )
-      .catch((err) => {
-        qrError.classList.remove("hidden");
-        console.error("Error starting QR scanner:", err);
-      });
-  }
+  // Při načtení stránky načteme existující fotografie
+  loadPhotos();
 
   /**
-   * Zpracování úspěšného naskenování QR kódu
+   * Vygeneruje náhodné ID pro relaci
    */
-  function onQrCodeSuccess(decodedText) {
-    // Zastavení skeneru po úspěšném naskenování
-    html5QrCode
-      .stop()
-      .then(() => {
-        console.log("QR Code scanner stopped.");
-      })
-      .catch((err) => {
-        console.error("Error stopping QR scanner:", err);
-      });
-
-    // Zobrazení výsledku skenování
-    sessionId = decodedText;
-    qrValue.textContent = decodedText;
-    qrResult.classList.remove("hidden");
-
-    // Aktivace sekce pro nahrávání fotografií
-    uploadSection.classList.remove("hidden");
-    photoListSection.classList.remove("hidden");
-
-    // Načtení existujících fotografií
-    loadPhotos();
-  }
-
-  /**
-   * Zpracování chyby při skenování QR kódu
-   */
-  function onQrCodeError(errorMessage) {
-    console.error("QR Code scanning error:", errorMessage);
+  function generateRandomId() {
+    return Math.random().toString(36).substring(2, 15);
   }
 
   /**
@@ -137,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Vytvoření FormData objektu pro nahrání souborů
     const formData = new FormData();
 
-    // Přidání QR kódu jako metadata
+    // Přidání ID relace jako metadata
     formData.append("sessionId", sessionId);
 
     // Přidání všech vybraných souborů
@@ -184,11 +127,9 @@ document.addEventListener("DOMContentLoaded", function () {
    * Načtení seznamu fotografií ze serveru
    */
   function loadPhotos() {
-    if (!sessionId) return;
-
     photoList.innerHTML = "Načítání...";
 
-    fetch(`${API_URL}/photos`)
+    fetch(`${API_URL}/photos?sessionId=${encodeURIComponent(sessionId)}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Chyba při načítání fotografií");
