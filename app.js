@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Nastavení URL Azure Function - změňte podle vaší konfigurace
-  const API_URL = "https://your-function-app.azurewebsites.net/api";
+  const API_URL = "https://bena-photo.azurewebsites.net/api";
 
   // Reference na HTML elementy
   const videoElement = document.getElementById("video");
