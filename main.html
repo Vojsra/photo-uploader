@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Foto Uploader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #video {
+            width: 100%;
+            background-color: #f0f0f0;
+        }
+
+        #photoPreview {
+            max-width: 100%;
+            margin-top: 10px;
+        }
+
+        button,
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 8px 16px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+
+        #photoList {
+            margin-top: 20px;
+        }
+
+        #photoList img {
+            max-width: 100px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>QR Foto Uploader</h1>
+
+    <div id="qrScannerSection">
+        <h2>Naskenujte QR kód</h2>
+        <div id="qrReader">
+            <video id="video" autoplay></video>
+        </div>
+        <button id="startScanButton">Spustit skener QR</button>
+        <p id="qrResult" class="hidden">QR kód: <span id="qrValue"></span></p>
+        <p id="qrError" class="error hidden">Nepodařilo se spustit kameru. Zkontrolujte oprávnění.</p>
+    </div>
+
+    <div id="uploadSection" class="hidden">
+        <h2>Nahrát fotografie</h2>
+        <input type="file" id="photoInput" accept="image/*" multiple capture="camera">
+        <button id="captureButton">Pořídit fotku</button>
+        <div>
+            <img id="photoPreview" class="hidden">
+        </div>
+        <button id="uploadButton" class="hidden">Nahrát fotografie</button>
+        <p id="uploadStatus"></p>
+    </div>
+
+    <div id="photoListSection" class="hidden">
+        <h2>Nahrané fotografie</h2>
+        <button id="refreshPhotosButton">Obnovit seznam</button>
+        <div id="photoList"></div>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode@2.3.4/html5-qrcode.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
