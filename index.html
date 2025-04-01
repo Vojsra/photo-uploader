@@ -6,428 +6,453 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eva & Honza - Narozeninové fotoalbum</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         :root {
-            --primary-color: #ff6b6b;
-            --secondary-color: #4ecdc4;
-            --dark-color: #333333;
-            --light-color: #f7f7f7;
-            --accent-color: #ffd166;
-        }
+    --primary-color: #ff6b6b;
+    --secondary-color: #4ecdc4;
+    --dark-color: #333333;
+    --light-color: #f7f7f7;
+    --accent-color: #ffd166;
+}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-color);
-            color: var(--dark-color);
-            line-height: 1.6;
-            padding-bottom: 50px;
-        }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+    padding-bottom: 50px;
+    /* Přidáno pro galerii */
+    transition: overflow 0.3s ease;
+}
 
-        body.no-scroll {
-            overflow: hidden;
-        }
+/* Přidáno pro galerii */
+body.no-scroll {
+    overflow: hidden;
+}
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 15px;
-        }
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 15px;
+}
 
-        .header {
-            text-align: center;
-            padding: 20px 0;
-            position: relative;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 0 0 30px 30px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+.header {
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        .birthday-decorations {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 20px;
-            background-image:
-                radial-gradient(circle at 10px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 30px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 50px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 70px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 90px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 110px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 130px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 150px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 170px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 190px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 210px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 230px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 250px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 270px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 290px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 310px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 330px 10px, var(--accent-color) 6px, transparent 6px),
-                radial-gradient(circle at 350px 10px, var(--accent-color) 6px, transparent 6px);
-            background-size: 360px 20px;
-            background-repeat: repeat-x;
-        }
+.birthday-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-image:
+        radial-gradient(circle at 10px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 30px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 50px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 70px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 90px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 110px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 130px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 150px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 170px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 190px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 210px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 230px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 250px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 270px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 290px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 310px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 330px 10px, var(--accent-color) 6px, transparent 6px),
+        radial-gradient(circle at 350px 10px, var(--accent-color) 6px, transparent 6px);
+    background-size: 360px 20px;
+    background-repeat: repeat-x;
+}
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
 
-        .birthday-info {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
+.birthday-info {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
 
-        .card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+.card {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .card h2 {
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 8px;
-            display: flex;
-            align-items: center;
-        }
+.card h2 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
 
-        .card h2 i {
-            margin-right: 10px;
-        }
+.card h2 i {
+    margin-right: 10px;
+}
 
-        .hidden {
-            display: none;
-        }
+.hidden {
+    display: none !important; /* Použijeme !important pro jistotu překrytí */
+}
 
-        #photoPreview {
-            max-width: 100%;
-            max-height: 300px;
-            margin: 15px auto;
-            display: block;
-            border-radius: 8px;
-            border: 3px solid var(--accent-color);
-            padding: 3px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
+#photoPreview {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 15px auto;
+    display: block;
+    border-radius: 8px;
+    border: 3px solid var(--accent-color);
+    padding: 3px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 10px 5px 10px 0;
-            padding: 12px 20px;
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 5px 10px 0;
+    padding: 12px 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-        .btn i {
-            margin-right: 8px;
-        }
+.btn i {
+    margin-right: 8px;
+}
 
-        .btn-primary {
-            background-color: var(--primary-color);
-        }
+.btn-primary {
+    background-color: var(--primary-color);
+}
 
-        .btn-primary:hover {
-            background-color: #ff5252;
-            transform: translateY(-2px);
-        }
+.btn-primary:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+}
 
-        .btn-secondary {
-            background-color: var(--secondary-color);
-        }
+.btn-secondary {
+    background-color: var(--secondary-color);
+}
 
-        .btn-secondary:hover {
-            background-color: #3dbdb5;
-            transform: translateY(-2px);
-        }
+.btn-secondary:hover {
+    background-color: #3dbdb5;
+    transform: translateY(-2px);
+}
 
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-        }
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
 
-        .btn.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+/* Mobilní optimalizace pro tlačítka */
+.btn-mobile {
+   /* Můžete zde přidat specifické styly pro mobily, např. větší padding */
+   /* padding: 15px 25px; */
+}
 
-        input[type="file"] {
-            display: none;
-        }
 
-        .error {
-            color: #e74c3c;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: rgba(231, 76, 60, 0.1);
-            margin-top: 10px;
-        }
+input[type="file"] {
+    display: none;
+}
 
-        .success {
-            color: #27ae60;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: rgba(39, 174, 96, 0.1);
-            margin-top: 10px;
-        }
+.error {
+    color: #e74c3c;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(231, 76, 60, 0.1);
+    margin-top: 10px;
+}
 
-        #photoList {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            grid-gap: 10px;
-            margin-top: 15px;
-        }
+.success {
+    color: #27ae60;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgba(39, 174, 96, 0.1);
+    margin-top: 10px;
+}
 
-        .photo-item {
-            position: relative;
-            aspect-ratio: 1;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
+#photoList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-gap: 10px;
+    margin-top: 15px;
+}
 
-        .photo-item:hover {
-            transform: scale(1.05);
-        }
+.photo-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
 
-        #photoList img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-        }
+.photo-item:hover {
+    transform: scale(1.05);
+}
 
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 10px;
-        }
+#photoList img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    display: block; /* Zajistí, že img vyplní div */
+}
 
-        @media (max-width: 480px) {
-            .button-group {
-                flex-direction: column;
-            }
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+}
 
-            .btn {
-                margin: 5px 0;
-                width: 100%;
-            }
+@media (max-width: 480px) {
+    .button-group {
+        flex-direction: column;
+    }
 
-            h1 {
-                font-size: 1.5rem;
-            }
+    .btn {
+        margin: 5px 0;
+        width: 100%;
+    }
 
-            .birthday-info {
-                font-size: 1rem;
-            }
-        }
+    h1 {
+        font-size: 1.5rem;
+    }
 
-        .balloons {
-            position: fixed;
-            bottom: -100px;
-            animation: float 15s ease-in infinite;
-            opacity: 0.7;
-            z-index: -1;
-        }
+    .birthday-info {
+        font-size: 1rem;
+    }
+     /* Zmenšení mezer pro mobilní náhledy */
+     #photoList {
+        grid-gap: 5px;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+     }
+}
 
-        .balloon {
-            position: absolute;
-            width: 40px;
-            height: 50px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
-        }
+/* Animace balónků (beze změny) */
+.balloons {
+    position: fixed;
+    bottom: -100px; /* Začínají mimo obrazovku */
+    animation: float 6s ease-in forwards; /* 'forwards' udrží konečný stav (opacity: 0) */
+    opacity: 0.7;
+    z-index: 10; /* Zvýšíme z-index, aby byly nad obsahem, ale pod galerií */
+    pointer-events: none; /* Aby neblokovaly klikání */
+}
 
-        .balloon:before {
-            content: "";
-            position: absolute;
-            width: 1px;
-            height: 60px;
-            background-color: rgba(0, 0, 0, 0.2);
-            top: 50px;
-            left: 20px;
-        }
+.balloon {
+    position: absolute;
+    width: 40px;
+    height: 50px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: inset -5px -5px 10px rgba(0, 0, 0, 0.1);
+}
+.balloon:before { /* Provázek */
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.2);
+    top: 50px;
+    left: 20px;
+}
+.balloon:nth-child(2) {
+    background-color: var(--primary-color);
+    left: 50px; top: 20px;
+}
+.balloon:nth-child(3) {
+    background-color: var(--secondary-color);
+    left: 110px; top: 10px;
+}
 
-        .balloon:nth-child(2) {
-            background-color: var(--primary-color);
-            left: 50px;
-            top: 20px;
-            animation-delay: 2s;
-        }
+/* Aktualizovaná animace, aby balónky zmizely */
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    50% { transform: translateY(-60vh) rotate(15deg); } /* Vylétnou výše */
+    100% { transform: translateY(-120vh) rotate(-10deg); opacity: 0; } /* Zmizí úplně nahoře */
+}
 
-        .balloon:nth-child(3) {
-            background-color: var(--secondary-color);
-            left: 110px;
-            top: 10px;
-            animation-delay: 4s;
-        }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-            }
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: var(--dark-color);
+    width: 100%; /* Zajistí, že se roztáhne, i když je v gridu */
+    grid-column: 1 / -1; /* Pokud by byl #photoList grid, roztáhne se přes všechny sloupce */
+}
 
-            50% {
-                transform: translateY(-300px) rotate(10deg);
-            }
+.loading i {
+    animation: spin 1s linear infinite;
+    display: block; /* Změna na block pro lepší centrování */
+    font-size: 2rem;
+    margin: 0 auto 10px auto; /* Centrování */
+    color: var(--secondary-color);
+}
 
-            100% {
-                transform: translateY(-600px) rotate(-5deg);
-                opacity: 0;
-            }
-        }
+.text-center {
+    text-align: center;
+    width: 100%;
+    padding: 15px;
+    color: var(--dark-color);
+    grid-column: 1 / -1;
+}
+.text-center i {
+    margin-right: 8px;
+    color: var(--secondary-color);
+}
 
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: var(--dark-color);
-        }
 
-        .loading i {
-            animation: spin 1s linear infinite;
-            display: block;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--secondary-color);
-        }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
 
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+/* === NOVÉ STYLY PRO GALERII === */
+.photo-gallery {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Tmavší pozadí */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0; /* Počáteční stav pro animaci */
+    transition: opacity 0.3s ease;
+    padding: 10px; /* Malý padding kolem */
+}
 
-        /* Styly pro fotogalerii */
-        #photoGallery {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
+.photo-gallery.gallery-active {
+    opacity: 1; /* Aktivní stav */
+}
 
-        #photoGallery.gallery-active {
-            opacity: 1;
-        }
+.gallery-image-container {
+    position: relative;
+    max-width: 95%;
+    max-height: 95%;
+    display: flex; /* Pro centrování loaderu */
+    justify-content: center;
+    align-items: center;
+}
 
-        .gallery-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+#fullImage {
+    display: block;
+    max-width: 100%;
+    max-height: 100%; /* Výška se přizpůsobí */
+    width: auto; /* Šířka se přizpůsobí */
+    height: auto; /* Výška se přizpůsobí */
+    object-fit: contain; /* Zobrazí celý obrázek bez ořezu */
+    border-radius: 5px;
+    transition: opacity 0.3s ease; /* Plynulý přechod po načtení */
+}
 
-        #fullImage {
-            max-width: 100%;
-            max-height: 80vh;
-            object-fit: contain;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-            transition: opacity 0.3s ease;
-        }
+/* Styl pro obrázek během načítání */
+#fullImage.loading-image {
+    opacity: 0.5; /* Mírně průhledný během načítání */
+}
 
-        #fullImage.loading-image {
-            opacity: 0.5;
-        }
+.gallery-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2.5rem;
+    z-index: 5; /* Nad obrázkem, pokud by se překrývaly */
+    display: none; /* Skrytý defaultně */
+}
+/* Zobrazí loader, když obrázek má třídu loading-image */
+#fullImage.loading-image + .gallery-loader {
+    display: block;
+}
 
-        .gallery-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 20px;
-        }
 
-        .nav-btn {
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.gallery-close-btn, .gallery-nav-btn {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    z-index: 10; /* Nad obrázkem */
+}
+.gallery-close-btn:hover, .gallery-nav-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
 
-        .nav-btn:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
+.gallery-close-btn {
+    top: 15px;
+    right: 15px;
+}
 
-        #closeGallery {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.gallery-nav-btn {
+    top: 50%;
+    transform: translateY(-50%);
+}
+.gallery-nav-btn.prev {
+    left: 15px;
+}
+.gallery-nav-btn.next {
+    right: 15px;
+}
+.gallery-nav-btn.disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+}
 
-        #closeGallery:hover {
-            background-color: rgba(255, 255, 255, 0.5);
-        }
-
-        #imageCounter {
-            color: white;
-            padding: 10px;
-            font-size: 1rem;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .btn-mobile {
-            padding: 15px 25px;
-            font-size: 1.1rem;
-        }
+.gallery-counter {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+    z-index: 10;
+}
     </style>
 </head>
 
@@ -443,11 +468,9 @@
         <div class="card">
             <h2><i class="fas fa-camera"></i> Nahrát fotografie</h2>
 
-            <!-- Skrytá input pole pro různé typy výběru -->
             <input type="file" id="cameraInput" accept="image/*" capture="camera" class="hidden">
             <input type="file" id="galleryInput" accept="image/*" multiple class="hidden">
 
-            <!-- Viditelná tlačítka pro uživatele -->
             <div class="button-group">
                 <button id="takePictureButton" class="btn btn-primary"><i class="fas fa-camera"></i> Pořídit
                     fotku</button>
@@ -456,7 +479,7 @@
             </div>
 
             <div>
-                <img id="photoPreview" class="hidden">
+                <img id="photoPreview" class="hidden" alt="Náhled fotografie">
             </div>
 
             <div class="button-group">
@@ -479,32 +502,27 @@
         </div>
     </div>
 
-    <!-- Fotogalerie - přidáno -->
-    <div id="photoGallery" class="hidden">
-        <div id="closeGallery" class="nav-btn"><i class="fas fa-times"></i></div>
-        <div class="gallery-content">
-            <img id="fullImage" src="" alt="Fotografie">
-            <div class="gallery-nav">
-                <div id="prevPhoto" class="nav-btn"><i class="fas fa-chevron-left"></i></div>
-                <div id="nextPhoto" class="nav-btn"><i class="fas fa-chevron-right"></i></div>
-            </div>
-        </div>
-        <div id="imageCounter">1 / 1</div>
-    </div>
-
-    <!-- Dekorativní balónky -->
     <div class="balloons" style="left: 10%;">
         <div class="balloon"></div>
         <div class="balloon"></div>
         <div class="balloon"></div>
     </div>
-
     <div class="balloons" style="left: 70%;">
         <div class="balloon"></div>
         <div class="balloon"></div>
         <div class="balloon"></div>
     </div>
 
+    <div id="photoGallery" class="photo-gallery hidden">
+        <button id="closeGallery" class="gallery-close-btn"><i class="fas fa-times"></i></button>
+        <button id="prevPhoto" class="gallery-nav-btn prev"><i class="fas fa-chevron-left"></i></button>
+        <button id="nextPhoto" class="gallery-nav-btn next"><i class="fas fa-chevron-right"></i></button>
+        <div class="gallery-image-container">
+            <img id="fullImage" src="" alt="Fotografie z galerie">
+            <div class="gallery-loader"><i class="fas fa-spinner fa-spin"></i></div>
+        </div>
+        <div id="imageCounter" class="gallery-counter"></div>
+    </div>
     <script src="app.js"></script>
 </body>
 
