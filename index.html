@@ -29,6 +29,10 @@
             padding-bottom: 50px;
         }
 
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         .container {
             width: 100%;
             max-width: 600px;
@@ -163,6 +167,11 @@
         .btn-sm {
             padding: 8px 16px;
             font-size: 0.9rem;
+        }
+
+        .btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         input[type="file"] {
@@ -317,6 +326,108 @@
                 transform: rotate(360deg);
             }
         }
+
+        /* Styly pro fotogalerii */
+        #photoGallery {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #photoGallery.gallery-active {
+            opacity: 1;
+        }
+
+        .gallery-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 80%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #fullImage {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s ease;
+        }
+
+        #fullImage.loading-image {
+            opacity: 0.5;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        #closeGallery {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #closeGallery:hover {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+
+        #imageCounter {
+            color: white;
+            padding: 10px;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .btn-mobile {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+        }
     </style>
 </head>
 
@@ -366,6 +477,19 @@
                 Načítání fotografií...
             </div>
         </div>
+    </div>
+
+    <!-- Fotogalerie - přidáno -->
+    <div id="photoGallery" class="hidden">
+        <div id="closeGallery" class="nav-btn"><i class="fas fa-times"></i></div>
+        <div class="gallery-content">
+            <img id="fullImage" src="" alt="Fotografie">
+            <div class="gallery-nav">
+                <div id="prevPhoto" class="nav-btn"><i class="fas fa-chevron-left"></i></div>
+                <div id="nextPhoto" class="nav-btn"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </div>
+        <div id="imageCounter">1 / 1</div>
     </div>
 
     <!-- Dekorativní balónky -->

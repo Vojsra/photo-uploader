@@ -10,17 +10,23 @@ document.addEventListener("DOMContentLoaded", function () {
   const cameraInput = document.getElementById("cameraInput");
   const galleryInput = document.getElementById("galleryInput");
   const takePictureButton = document.getElementById("takePictureButton");
-  const selectFromGalleryButton = document.getElementById(
-    "selectFromGalleryButton"
-  );
+  const selectFromGalleryButton = document.getElementById("selectFromGalleryButton");
   const photoPreview = document.getElementById("photoPreview");
   const uploadButton = document.getElementById("uploadButton");
   const uploadStatus = document.getElementById("uploadStatus");
   const refreshPhotosButton = document.getElementById("refreshPhotosButton");
   const photoList = document.getElementById("photoList");
+  const photoGallery = document.getElementById("photoGallery");
+  const closeGallery = document.getElementById("closeGallery");
+  const prevPhoto = document.getElementById("prevPhoto");
+  const nextPhoto = document.getElementById("nextPhoto");
+  const fullImage = document.getElementById("fullImage");
+  const imageCounter = document.getElementById("imageCounter");
 
   let selectedFiles = [];
-
+  let currentPhotoIndex = 0;
+  let galleryPhotos = [];
+  
   // Obsluha tlačítek pro vybrání zdroje fotografií
   takePictureButton.addEventListener("click", function () {
     cameraInput.click();
@@ -45,6 +51,36 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Obsluha tlačítka pro obnovení seznamu fotografií
   refreshPhotosButton.addEventListener("click", loadPhotos);
+  
+  // Ovládání galerie
+  closeGallery.addEventListener("click", hideGallery);
+  prevPhoto.addEventListener("click", showPreviousPhoto);
+  nextPhoto.addEventListener("click", showNextPhoto);
+  
+  // Detekcе swipe gesta pro mobilní zařízení
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  fullImage.addEventListener("touchstart", function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+  
+  fullImage.addEventListener("touchend", function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) {
+      // Swipe vlevo - další fotka
+      showNextPhoto();
+    }
+    if (touchEndX > touchStartX + swipeThreshold) {
+      // Swipe vpravo - předchozí fotka
+      showPreviousPhoto();
+    }
+  }
 
   // Při načtení stránky načteme existující fotografie
   loadPhotos();
@@ -192,6 +228,22 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /**
+   * Vytvoří miniaturní verzi URL pro rychlejší načítání
+   * @param {String} originalUrl - Původní URL obrázku
+   * @returns {String} - URL pro miniaturu
+   */
+  function createThumbnailUrl(originalUrl) {
+    // Tady můžete implementovat konkrétnější logiku podle vašeho serveru
+    // Například přidáním query parametru ?width=200 nebo /thumbnail/ před název souboru
+    
+    // Pro Azure Blob Storage můžete použít SAS token s transformacemi
+    // Příklad: originalUrl + "?width=200&height=200&format=jpg&quality=80"
+    
+    // Pro jednoduchost v tomto příkladu přidáme parametr thumb=1
+    return originalUrl + "?thumb=1";
+  }
+
+  /**
    * Načtení seznamu fotografií ze serveru
    */
   function loadPhotos() {
@@ -207,6 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
       .then((data) => {
         photoList.innerHTML = "";
+        galleryPhotos = data; // Uložíme seznam fotografií pro galerii
 
         if (data.length === 0) {
           photoList.innerHTML =
@@ -215,16 +268,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         // Zobrazení náhledů fotografií
-        data.forEach((url) => {
+        data.forEach((url, index) => {
           const photoItem = document.createElement("div");
           photoItem.className = "photo-item";
 
           const img = document.createElement("img");
-          img.src = url;
+          // Použijeme URL pro miniatury místo originálního obrázku
+          img.src = createThumbnailUrl(url);
           img.alt = "Nahraná fotografie";
           img.loading = "lazy"; // Lazy loading pro lepší výkon
+          img.dataset.index = index; // Uložíme index pro galerii
+          img.dataset.fullUrl = url; // Uložíme originální URL pro galerii
 
-          img.onclick = () => window.open(url, "_blank");
+          // Otevřeme galerii po kliknutí na miniaturu
+          img.onclick = () => openGallery(index);
 
           photoItem.appendChild(img);
           photoList.appendChild(photoItem);
@@ -234,6 +291,100 @@ document.addEventListener("DOMContentLoaded", function () {
         photoList.innerHTML = `<div class="error"><i class="fas fa-exclamation-triangle"></i> Chyba při načítání fotografií: ${error.message}</div>`;
         console.error("Error loading photos:", error);
       });
+  }
+  
+  /**
+   * Otevře galerii a zobrazí zvolenou fotografii
+   * @param {Number} index - Index fotografie k zobrazení
+   */
+  function openGallery(index) {
+    if (!galleryPhotos || galleryPhotos.length === 0) return;
+    
+    currentPhotoIndex = index;
+    photoGallery.classList.remove("hidden");
+    document.body.classList.add("no-scroll");
+    
+    // Nastavíme třídu pro animaci
+    photoGallery.classList.add("gallery-active");
+    
+    // Zobrazíme vybranou fotografii
+    showCurrentPhoto();
+    
+    // Nastavíme klávesové ovládání
+    document.addEventListener("keydown", handleGalleryKeyPress);
+  }
+  
+  /**
+   * Skryje galerii
+   */
+  function hideGallery() {
+    photoGallery.classList.remove("gallery-active");
+    setTimeout(() => {
+      photoGallery.classList.add("hidden");
+      document.body.classList.remove("no-scroll");
+    }, 300);
+    
+    // Odstraníme klávesové ovládání
+    document.removeEventListener("keydown", handleGalleryKeyPress);
+  }
+  
+  /**
+   * Obsluha klávesových zkratek v galerii
+   * @param {KeyboardEvent} e - Událost klávesy
+   */
+  function handleGalleryKeyPress(e) {
+    if (e.key === "ArrowLeft") {
+      showPreviousPhoto();
+    } else if (e.key === "ArrowRight") {
+      showNextPhoto();
+    } else if (e.key === "Escape") {
+      hideGallery();
+    }
+  }
+  
+  /**
+   * Zobrazí aktuální fotografii v galerii
+   */
+  function showCurrentPhoto() {
+    if (!galleryPhotos || galleryPhotos.length === 0) return;
+    
+    // Zobrazíme indikátor načítání
+    fullImage.classList.add("loading-image");
+    
+    // Předem načteme plnou verzi obrázku
+    const img = new Image();
+    img.onload = function() {
+      fullImage.src = galleryPhotos[currentPhotoIndex];
+      fullImage.classList.remove("loading-image");
+    };
+    img.src = galleryPhotos[currentPhotoIndex];
+    
+    // Aktualizujeme počítadlo
+    imageCounter.textContent = `${currentPhotoIndex + 1} / ${galleryPhotos.length}`;
+    
+    // Aktualizujeme tlačítka pro navigaci
+    prevPhoto.classList.toggle("disabled", currentPhotoIndex === 0);
+    nextPhoto.classList.toggle("disabled", currentPhotoIndex === galleryPhotos.length - 1);
+  }
+  
+  /**
+   * Zobrazí předchozí fotografii v galerii
+   */
+  function showPreviousPhoto() {
+    if (currentPhotoIndex > 0) {
+      currentPhotoIndex--;
+      showCurrentPhoto();
+    }
+  }
+  
+  /**
+   * Zobrazí následující fotografii v galerii
+   */
+  function showNextPhoto() {
+    if (currentPhotoIndex < galleryPhotos.length - 1) {
+      currentPhotoIndex++;
+      showCurrentPhoto();
+    }
   }
 
   // Přizpůsobení pro mobilní zařízení
