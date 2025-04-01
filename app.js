@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Nastavení URL Azure Function - změňte podle vaší konfigurace
-  const API_URL = "https://bena-photo.azurewebsites.net/api";
+  const API_URL = "http://localhost:7134/api";
+  // const API_URL = "https://bena-photo.azurewebsites.net/api";
 
   // Pro identifikaci relace použijeme ID v URL nebo vygenerujeme náhodné
   const urlParams = new URLSearchParams(window.location.search);
@@ -280,12 +281,12 @@ document.addEventListener("DOMContentLoaded", function () {
   /**
    * Načtení seznamu fotografií ze serveru
    */
+  // Načtení seznamu fotografií ze serveru - upravená verze
   function loadPhotos() {
-    if (!photoList) return; // Pokud element neexistuje, skončíme
+    if (!photoList) return;
 
     photoList.innerHTML =
       '<div class="loading"><i class="fas fa-spinner fa-spin"></i>Načítání fotografií...</div>';
-    // Zrušíme grid layout během načítání
     photoList.style.display = "block";
 
     fetch(`${API_URL}/photos`)
@@ -296,41 +297,36 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json();
       })
       .then((data) => {
-        photoList.innerHTML = ""; // Vyčistíme obsah
-        // Obnovíme grid layout
+        photoList.innerHTML = "";
         photoList.style.display = "grid";
 
-        galleryPhotos = data; // Uložíme pole URL plných obrázků pro galerii
+        // Upraveno pro práci s PhotoInfo objekty
+        galleryPhotos = data.map((item) => item.fullUrl); // Ukládáme jen plné URL pro galerii
 
         if (!Array.isArray(data) || data.length === 0) {
-          photoList.style.display = "block"; // Změna na block pro zobrazení textu
+          photoList.style.display = "block";
           photoList.innerHTML =
             '<div class="text-center"><i class="fas fa-info-circle"></i> Žádné nahrané fotografie.</div>';
           return;
         }
 
-        // Zobrazení náhledů fotografií
-        data.forEach((url, index) => {
+        // Zobrazení náhledů fotografií - použijeme přímo ThumbnailUrl
+        data.forEach((photoInfo, index) => {
           const photoItem = document.createElement("div");
           photoItem.className = "photo-item";
 
           const img = document.createElement("img");
-          // Použijeme URL pro MINIATURY
-          img.src = createThumbnailUrl(url);
+          img.src = photoInfo.thumbnailUrl; // Použijeme ThumbnailUrl z objektu
           img.alt = `Nahraná fotografie ${index + 1}`;
-          img.loading = "lazy"; // Lazy loading pro miniatury
-          img.dataset.index = index; // Uložíme index pro galerii
-          img.dataset.fullUrl = url; // Uložíme originální URL pro galerii
+          img.loading = "lazy";
+          img.dataset.index = index;
+          img.dataset.fullUrl = photoInfo.fullUrl; // Uložíme originální URL
 
-          // Otevřeme galerii po kliknutí na miniaturu
           img.onclick = () => openGallery(index);
 
-          // Přidáme error handler pro případ, že se miniatura nenačte
           img.onerror = () => {
             console.warn(`Miniatura se nepodařila načíst: ${img.src}`);
-            // Můžete zobrazit placeholder nebo ikonu chyby
-            photoItem.innerHTML =
-              '<i class="fas fa-image-broken" style="/* přidejte styly pro ikonu chyby */"></i>';
+            photoItem.innerHTML = '<i class="fas fa-image-broken"></i>';
             photoItem.style.display = "flex";
             photoItem.style.justifyContent = "center";
             photoItem.style.alignItems = "center";
@@ -342,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       })
       .catch((error) => {
-        photoList.style.display = "block"; // Změna na block pro zobrazení chyby
+        photoList.style.display = "block";
         photoList.innerHTML = `<div class="error" style="text-align: center;"><i class="fas fa-exclamation-triangle"></i> Chyba při načítání fotografií: ${error.message}</div>`;
         console.error("Error loading photos:", error);
       });
